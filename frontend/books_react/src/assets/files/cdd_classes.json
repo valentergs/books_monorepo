@@ -1,0 +1,42 @@
+[
+  {
+    "Código": "000",
+    "Gênero": "Generalidades"
+  },
+  {
+    "Código": 100,
+    "Gênero": "Filosofia"
+  },
+  {
+    "Código": 200,
+    "Gênero": "Religião"
+  },
+  {
+    "Código": 300,
+    "Gênero": "Ciências sociais"
+  },
+  {
+    "Código": 400,
+    "Gênero": "Línguas"
+  },
+  {
+    "Código": 500,
+    "Gênero": "Ciências puras"
+  },
+  {
+    "Código": 600,
+    "Gênero": "Ciências aplicadas"
+  },
+  {
+    "Código": 700,
+    "Gênero": "Artes"
+  },
+  {
+    "Código": 800,
+    "Gênero": "Literatura"
+  },
+  {
+    "Código": 900,
+    "Gênero": "História e geografia"
+  }
+]
