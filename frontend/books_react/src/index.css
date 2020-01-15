@@ -5,6 +5,7 @@ TOP CONTAINER
 CAIXA
 LIVROS
 FORM
+MEDIA QUERY
 */
 
 :root {
@@ -153,10 +154,10 @@ input {
 
 /* LIVRO DETALHE */
 
-.caixa .caixa-detalhe-livro {
+.caixa-detalhe-livro {
   display: grid;
   grid-gap: 10px;
-  /* grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); */
+  /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
   grid-template-columns: 1fr 2fr;
 }
 
@@ -172,11 +173,11 @@ input {
   width: 100%;
 }
 
-.caixa-detalhe-livro .descricao {
+.descricao {
   padding: 10px;
   display: grid;
   grid-gap: 5px;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: 1fr 1fr;
 }
 
 .caixa-detalhe-livro .titulo {
@@ -236,7 +237,7 @@ form .form-livro-inserir {
 }
 
 .grande {
-  grid-column: span 3;
+  grid-column: span 2;
 }
 
 .btn {
@@ -255,15 +256,7 @@ form .form-livro-inserir {
 
 /* MEDIA QUERY */
 
-@media (max-width: 900px) {
-  /* .top-container {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(2, 1fr);
-  } */
-}
-
-@media (max-width: 770px) {
+/* @media (max-width: 770px) {
 }
 
 @media (max-width: 450px) {
@@ -293,4 +286,4 @@ form .form-livro-inserir {
   .grande {
     grid-column: span 1;
   }
-}
+} */
