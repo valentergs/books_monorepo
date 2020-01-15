@@ -1,5 +1,6 @@
 /*
 NAVIGATION
+SHOWCASE
 TOP CONTAINER
 CAIXA
 LIVROS
@@ -69,12 +70,51 @@ input {
   color: var(--light);
 }
 
+/* SHOWCASE */
+
+.showcase {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.showcase .toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin: 0px;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.showcase input {
+  margin-left: 15px;
+}
+
+.showcase ul {
+  display: grid;
+  grid-gap: 2px;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 3fr));
+  /* grid-auto-rows: 80px; */
+  grid-auto-flow: dense;
+  padding-left: 0px;
+}
+
+.showcase li {
+  list-style-type: none;
+}
+
+.showcase img {
+  width: 100%;
+}
+
 /* TOP CONTAINER */
 
 .top-container {
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 2fr 4fr;
+  /* grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); */
 }
 
 /* CAIXA */
@@ -117,7 +157,7 @@ input {
   display: grid;
   grid-gap: 10px;
   /* grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); */
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 2fr;
 }
 
 .foto {
@@ -136,7 +176,7 @@ input {
   padding: 10px;
   display: grid;
   grid-gap: 5px;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
 
 .caixa-detalhe-livro .titulo {
@@ -188,10 +228,11 @@ input {
 
 /* FORM - INSERIR LIVROS */
 
-.form-livro-inserir {
+form .form-livro-inserir {
   display: grid;
   grid-gap: 15px;
-  grid-template-columns: repeat(3, 1fr);
+  /* grid-template-columns: repeat(2, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
 
 .grande {

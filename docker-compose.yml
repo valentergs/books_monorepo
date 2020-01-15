@@ -27,20 +27,20 @@ services:
     networks:
       - livros_api
 
-  frontend:
-    build: ./frontend/books_react
-    container_name: react
-    volumes:
-      - ./frontend/books_react:/frontend/books_react/src
-    ports:
-      - "3000:3000"
-    restart: on-failure
-    networks:
-      - livros_api
+  # frontend:
+  #   build: ./frontend/books_react
+  #   container_name: react
+  #   volumes:
+  #     - ./frontend/books_react:/frontend/books_react/src
+  #   ports:
+  #     - "3000:3000"
+  #   restart: on-failure
+  #   networks:
+  #     - livros_api
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin_container
+    container_name: pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: rodrigovalente@hotmail.com
       PGADMIN_DEFAULT_PASSWORD: Gustavo2012
