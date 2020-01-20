@@ -20,7 +20,12 @@ const LivroCurrent = () => {
       <div className="caixa-cabeca">
         <h3 className="caixa-cabeca-titulo">Detalhes da Obra</h3>
         <div className="caixa-cabeca-itens">
-          <a href="#">
+          <a
+            href="#"
+            // onClick={() => {
+            //   closeDialogLivroCurrent(false);
+            // }}
+          >
             <i className="fas fa-times"></i>
           </a>
         </div>

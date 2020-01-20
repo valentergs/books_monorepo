@@ -5,4 +5,3 @@ export const DELETAR_LIVRO = "DELETAR_LIVRO";
 export const EDITAR_LIVRO = "EDITAR_LIVRO";
 export const CLEAR_CURRENT = "CLEAR_CURRENT";
 export const SET_CURRENT = "SET_CURRENT";
-export const DB_CURRENT_SET_OPEN = "DB_CURRENT_SET_OPEN";

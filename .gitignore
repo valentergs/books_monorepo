@@ -70,4 +70,7 @@ sketch
 # Postgres Data
 postgres
 
+assets
+pg_dump
+
 # End of https://www.gitignore.io/api/go,react,macos

@@ -14,7 +14,8 @@ import {
 const LivroState = props => {
   const initialState = {
     livroState: [],
-    current: null
+    current: null,
+    dialogCurrentOpen: false
   };
 
   const [state, dispatch] = useReducer(LivroReducer, initialState);
@@ -67,6 +68,7 @@ const LivroState = props => {
       value={{
         livroState: state.livroState,
         current: state.current,
+        dialogCurrentOpen: state.dialogCurrentOpen,
         todosLivros,
         inserirLivro,
         deletarLivro,
