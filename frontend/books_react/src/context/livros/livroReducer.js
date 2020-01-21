@@ -4,7 +4,9 @@ import {
   DELETAR_LIVRO,
   EDITAR_LIVRO,
   SET_CURRENT,
-  CLEAR_CURRENT
+  CLEAR_CURRENT,
+  SET_ADD_BOOK,
+  CLOSE_ADD_BOOK
 } from "../types";
 
 export default (state, action) => {
@@ -40,6 +42,16 @@ export default (state, action) => {
       return {
         ...state,
         current: null
+      };
+    case SET_ADD_BOOK:
+      return {
+        ...state,
+        addBook: true
+      };
+    case CLOSE_ADD_BOOK:
+      return {
+        ...state,
+        addBook: false
       };
     default:
       return state;

@@ -8,14 +8,16 @@ import {
   DELETAR_LIVRO,
   EDITAR_LIVRO,
   CLEAR_CURRENT,
-  SET_CURRENT
+  SET_CURRENT,
+  SET_ADD_BOOK,
+  CLOSE_ADD_BOOK
 } from "../types";
 
 const LivroState = props => {
   const initialState = {
     livroState: [],
     current: null,
-    dialogCurrentOpen: false
+    addBook: false
   };
 
   const [state, dispatch] = useReducer(LivroReducer, initialState);
@@ -63,18 +65,28 @@ const LivroState = props => {
     dispatch({ type: CLEAR_CURRENT });
   };
 
+  const setAddBook = () => {
+    dispatch({ type: SET_ADD_BOOK });
+  };
+
+  const closeAddBook = () => {
+    dispatch({ type: CLOSE_ADD_BOOK });
+  };
+
   return (
     <LivroContext.Provider
       value={{
         livroState: state.livroState,
         current: state.current,
-        dialogCurrentOpen: state.dialogCurrentOpen,
+        addBook: state.addBook,
         todosLivros,
         inserirLivro,
         deletarLivro,
         editarLivro,
         setCurrent,
-        clearCurrent
+        clearCurrent,
+        setAddBook,
+        closeAddBook
       }}
     >
       {props.children}

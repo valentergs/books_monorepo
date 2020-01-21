@@ -1,15 +1,18 @@
-import React, { useState, Fragment } from "react";
+import React, { useContext, Fragment } from "react";
 import InserirLivros from "./InserirLivros";
+import LivroContext from "../../context/livros/livroContext";
 
 const Toolbar = () => {
-  const [addBook, setAddBook] = useState(false);
+  const livroContext = useContext(LivroContext);
+  const { addBook, setAddBook, closeAddBook } = livroContext;
+
   return (
     <Fragment>
       <div className="toolbar">
         {addBook == false ? (
           <button
             onClick={() => {
-              setAddBook(!addBook);
+              setAddBook();
             }}
           >
             <i class="fas fa-plus"></i> Novo livro
@@ -17,7 +20,7 @@ const Toolbar = () => {
         ) : (
           <button
             onClick={() => {
-              setAddBook(!addBook);
+              closeAddBook();
             }}
           >
             <i class="far fa-times-circle"></i> Fechar formulário

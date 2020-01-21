@@ -3,7 +3,7 @@ import LivroContext from "../../context/livros/livroContext";
 
 const InserirLivros = () => {
   const livroContext = useContext(LivroContext);
-  const { current, inserirLivro, clearCurrent } = livroContext;
+  const { current, inserirLivro, clearCurrent, closeAddBook } = livroContext;
 
   const [livro, setLivro] = useState({
     titulo: "",
@@ -69,6 +69,7 @@ const InserirLivros = () => {
     e.preventDefault();
     inserirLivro(livro);
     limpaFormulário();
+    closeAddBook();
   };
 
   const limpaFormulário = () => {
