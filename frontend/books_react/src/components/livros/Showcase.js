@@ -6,7 +6,7 @@ const Showcase = () => {
   const { livroState, setCurrent } = livroContext;
 
   return (
-    <div>
+    <div className="showcase">
       <ul>
         {livroState.map(livro => (
           <li

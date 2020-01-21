@@ -1,7 +1,7 @@
 /*
-NAVIGATION
+NAVBAR
+TOOLBAR
 SHOWCASE
-TOP CONTAINER
 CAIXA
 LIVROS
 FORM
@@ -43,47 +43,55 @@ input {
   border-bottom: solid 0.5px var(--dark);
 }
 
-/* NAVIGATION */
+/* NAVBAR **************************************/
 
 .main-nav ul {
-  display: grid;
-  grid-gap: 40px;
-  padding: 0px;
-  margin: 0px;
-  list-style: none;
-  grid-template-columns: repeat(4, 1fr);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--dark);
 }
 
-.main-nav a {
-  background: var(--light);
+.main-nav h1 {
+  padding: 0 20px 0 20px;
+}
+
+.main-nav li {
+  float: left;
+}
+
+.main-nav li a {
   display: block;
-  text-decoration: none;
-  padding: 0.8rem;
-  text-align: center;
-  color: var(--dark);
-  text-transform: uppercase;
-  font-size: 1.1rem;
-  box-shadow: var(--shadow);
-}
-
-.main-nav a:hover {
-  background: var(--dark);
   color: var(--light);
+  text-align: center;
+  /* padding: 14px 16px; */
+  text-decoration: none;
 }
 
-/* TOOLBAR */
+.main-nav .active {
+  background-color: #4caf50;
+}
+
+/* TOOLBAR ******************************************/
 
 .toolbar {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
   flex-direction: row;
-  margin: 0px;
-  padding: 0.5rem 1rem 0.5rem 1rem;
+  justify-content: start;
+  background: var(--dark);
+  padding: 0 20px 20px 20px;
 }
 
-/* SHOWCASE */
+.toolbar button {
+  background: var(--dark);
+  font-family: var(--font);
+  color: var(--light);
+  border: none;
+  font-size: 1rem;
+}
+
+/* SHOWCASE ****************************************/
 
 .showcase {
   display: grid;
@@ -154,7 +162,7 @@ input {
   max-height: 400px;
 }
 
-/* LIVRO DETALHE */
+/* LIVRO DETALHE ******************************/
 
 .caixa-detalhe-livro {
   display: grid;
@@ -198,7 +206,7 @@ input {
   margin-bottom: 5px;
 }
 
-/* LIVROS */
+/* LIVROS ************************************/
 
 .livros ul {
   padding: 0px;
@@ -229,13 +237,14 @@ input {
   font-style: italic;
 }
 
-/* FORM - INSERIR LIVROS */
+/* FORM - INSERIR LIVROS **************************/
 
-form .form-livro-inserir {
+.form-livro-inserir {
   display: grid;
-  grid-gap: 15px;
-  /* grid-template-columns: repeat(2, 1fr); */
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  max-width: 700px;
+  padding: 20px;
 }
 
 .grande {

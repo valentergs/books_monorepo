@@ -1,6 +1,5 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Livros from "../livros/Livros";
-import InserirLivros from "../livros/InserirLivros";
 import Showcase from "../livros/Showcase";
 import LivroCurrent from "../livros/LivroCurrent";
 import Toolbar from "../livros/Toolbar";
@@ -8,10 +7,8 @@ import Toolbar from "../livros/Toolbar";
 const MainPane = () => {
   return (
     <div>
-      <section className="toolbar">
-        <Toolbar />
-      </section>
-      <section className="showcase">
+      <Toolbar />
+      <section>
         <Showcase />
       </section>
       <section className="top-container">
@@ -19,7 +16,6 @@ const MainPane = () => {
           <Livros />
         </div>
         <div className="caixa caixa-novo-livro">
-          <InserirLivros />
           <LivroCurrent />
         </div>
       </section>

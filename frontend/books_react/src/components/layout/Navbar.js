@@ -4,21 +4,18 @@ const Navbar = () => {
   return (
     <div>
       <nav className="main-nav">
-        <h1>Nossos livros</h1>
-        {/* <ul>
+        <ul>
           <li>
-            <a href="#">Home</a>
+            <a href="#home">
+              <h1>Nossos Livros</h1>
+            </a>
           </li>
-          <li>
-            <a href="#">Livros</a>
+          <li style={{ float: "right" }}>
+            <a class="active" href="#">
+              <i class="fas fa-user"></i>
+            </a>
           </li>
-          <li>
-            <a href="#">Autores</a>
-          </li>
-          <li>
-            <a href="#">Ajuda</a>
-          </li>
-        </ul> */}
+        </ul>
       </nav>
     </div>
   );
