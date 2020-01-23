@@ -18,8 +18,8 @@ type Usuarios struct {
 	ID        int      `json:"usuario_id"`
 	Nome      string   `json:"nome"`
 	Sobrenome string   `json:"sobrenome"`
-	Criado    NullTime `json:"criado"`
-	Alterado  NullTime `json:"alterado"`
+	Criado    null.String `json:"criado"`
+	Alterado  null.String `json:"alterado"`
 	Email     string   `json:"email"`
 	Senha     string   `json:"senha"`
 }
@@ -29,9 +29,9 @@ type Autores struct {
 	ID          int      `json:"autor_id"`
 	Nome        string   `json:"nome"`
 	Sobrenome   string   `json:"sobrenome"`
-	Criado      NullTime `json:"criado"`
+	Criado      null.String `json:"criado"`
 	CriadoPor   int      `json:"criado_por"`
-	Alterado    NullTime `json:"alterado"`
+	Alterado    null.String `json:"alterado"`
 	AlteradoPor int      `json:"alterado_por"`
 }
 
@@ -40,9 +40,9 @@ type Tradutores struct {
 	ID          int      `json:"tradutor_id"`
 	Nome        string   `json:"nome"`
 	Sobrenome   string   `json:"sobrenome"`
-	Criado      NullTime `json:"criado"`
+	Criado      null.String `json:"criado"`
 	CriadoPor   int      `json:"criado_por"`
-	Alterado    NullTime `json:"alterado"`
+	Alterado    null.String `json:"alterado"`
 	AlteradoPor int      `json:"alterado_por"`
 }
 
@@ -50,9 +50,9 @@ type Tradutores struct {
 type Livros struct {
 	ID             int      `json:"livro_id"`
 	Isbn           string   `json:"isbn"`
-	Criado         NullTime `json:"criado"`
+	Criado         null.String `json:"criado"`
 	CriadoPor      int   `json:"criado_por"`
-	Alterado       NullTime `json:"alterado"`
+	Alterado       null.String `json:"alterado"`
 	AlteradoPor    null.Int      `json:"alterado_por"`
 	Titulo         string   `json:"titulo"`
 	TituloOriginal string   `json:"titulo_original"`
@@ -90,9 +90,9 @@ type CddClasse struct {
 //Comentarios is an exportable type
 type Comentarios struct {
 	ID          int      `json:"comentario_id"`
-	Criado      NullTime `json:"criado"`
+	Criado      null.String `json:"criado"`
 	CriadoPor   string   `json:"criado_por"`
-	Alterado    NullTime `json:"alterado"`
+	Alterado    null.String `json:"alterado"`
 	AlteradoPor int      `json:"alterado_por"`
 	Livro       int      `json:"livro"`
 	Text        string   `json:"texto"`

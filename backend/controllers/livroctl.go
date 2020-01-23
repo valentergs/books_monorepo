@@ -87,6 +87,7 @@ func (c ControllerLivro) LivroUnico(db *sql.DB) http.HandlerFunc {
 		row := db.QueryRow("SELECT * FROM livros WHERE livro_id=$1;", id)
 
 		err = row.Scan(&livro.ID, &livro.Isbn, &livro.Criado, &livro.CriadoPor, &livro.Alterado, &livro.AlteradoPor, &livro.Titulo, &livro.TituloOriginal, &livro.Autor, &livro.Tradutor, &livro.Cdd, &livro.Cdu, &livro.Ano, &livro.Tema, &livro.Editora, &livro.Paginas, &livro.Idioma, &livro.Formato, &livro.Photourl)
+		
 		if err != nil {
 			if err == sql.ErrNoRows {
 				erro.Message = "Usuário inexistente"
@@ -196,14 +197,14 @@ func (c ControllerLivro) LivroEditar(db *sql.DB) http.HandlerFunc {
 
 		json.NewDecoder(r.Body).Decode(&livro)
 
-		expressaoSQL := `UPDATE livros SET titulo=$1, titulo_original=$2, autor=$3, tradutor=$4, isbn=$5, cdd=$6, cdu=$7, ano=$8, tema=$9, editora=$10, paginas=$11, idioma=$12, formato=$13, dono=$14, photourl=$15 WHERE livro_id=$16;`
-		_, err = db.Exec(expressaoSQL, livro.Titulo, livro.TituloOriginal, livro.Autor, livro.Tradutor, livro.Isbn, livro.Cdd, livro.Cdu, livro.Ano, livro.Tema, livro.Editora, livro.Paginas, livro.Idioma, livro.Formato, livro.Photourl, id)
+		expressaoSQL := `UPDATE livros SET isbn=$1, alterado=$2, alterado_por=$3, titulo=$4, titulo_original=$5, autor=$6, tradutor=$7, cdd=$8, cdu=$9, ano=$10, tema=$11, editora=$12, paginas=$13, idioma=$14, formato=$15, photourl=$16 WHERE livro_id=$17;`
+		_, err = db.Exec(expressaoSQL, livro.Isbn, livro.Alterado, livro.AlteradoPor, livro.Titulo, livro.TituloOriginal, livro.Autor, livro.Tradutor, livro.Cdd, livro.Cdu, livro.Ano, livro.Tema, livro.Editora, livro.Paginas, livro.Idioma, livro.Formato, livro.Photourl, id)
 		if err != nil {
 			panic(err)
 		}
 
-		row := db.QueryRow("SELECT * FROM livros WHERE livro_id=$1;", livro.ID)
-		err = row.Scan(&livro.ID, &livro.Titulo, &livro.TituloOriginal, &livro.Autor, &livro.Tradutor, &livro.Isbn, &livro.Cdd, &livro.Cdu, &livro.Ano, &livro.Tema, &livro.Editora, &livro.Paginas, &livro.Idioma, &livro.Formato, &livro.Photourl)
+		row := db.QueryRow("SELECT * FROM livros WHERE isbn=$1;", livro.Isbn)
+		err = row.Scan(&livro.ID, &livro.Isbn, &livro.Criado, &livro.CriadoPor, &livro.Alterado, &livro.AlteradoPor, &livro.Titulo, &livro.TituloOriginal, &livro.Autor, &livro.Tradutor, &livro.Cdd, &livro.Cdu, &livro.Ano, &livro.Tema, &livro.Editora, &livro.Paginas, &livro.Idioma, &livro.Formato, &livro.Photourl)
 
 		w.Header().Set("Content-Type", "application/json")
 
