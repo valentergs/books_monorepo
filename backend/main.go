@@ -9,8 +9,8 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/rs/cors"
 
-	"github.com/valentergs/books_backend/controllers"
-	"github.com/valentergs/books_backend/driver"
+	"github.com/valentergs/books_monorepo/controllers"
+	"github.com/valentergs/books_monorepo/driver"
 )
 
 var db *sql.DB

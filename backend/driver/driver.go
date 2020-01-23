@@ -18,7 +18,7 @@ func ConnectDB() *sql.DB {
 		// Quando rodar em Docker o HOST precisa ter o mesmo nome do container onde roda o Postgresql - nesse caso vai ficar postgres:5432
 		host     = "postgres"
 		port     = 5432
-		dbname   = "livros"
+		dbname   = "livrosv2"
 	)
 
 	psqlInfo := fmt.Sprintf("user=%s password=%s host=%s port=%d dbname=%s sslmode=disable", user, password, host, port, dbname)

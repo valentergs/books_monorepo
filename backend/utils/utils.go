@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/valentergs/books_backend/models"
+	"github.com/valentergs/books_monorepo/models"
 	"github.com/gocolly/colly"
 )
 
