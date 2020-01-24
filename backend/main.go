@@ -32,6 +32,10 @@ func main() {
 
 	// USUARIO URL ====================================
 	router.HandleFunc("/usuarios", usuarioctl.TodosUsuarios(db)).Methods("GET")
+	router.HandleFunc("/usuarios/{id}", usuarioctl.UsuarioUnico(db)).Methods("GET")
+	router.HandleFunc("/usuarios/inserir", usuarioctl.UsuarioInserir(db)).Methods("POST")
+	router.HandleFunc("/usuarios/apagar/{id}", usuarioctl.UsuariosApagar(db)).Methods("DELETE")
+	router.HandleFunc("/usuarios/editar/{id}", usuarioctl.UsuarioEditar(db)).Methods("PUT")
 
 	// CORS ==========================================================
 	c := cors.New(cors.Options{
