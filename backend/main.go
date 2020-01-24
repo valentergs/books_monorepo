@@ -19,6 +19,7 @@ func main() {
 	db := driver.ConnectDB()
 	usuarioctl := controllers.ControllerUsuario{}
 	livroctl := controllers.ControllerLivro{}
+	autorctl := controllers.ControllerAutor{}
 
 	// gorilla.mux
 	router := mux.NewRouter()
@@ -36,6 +37,13 @@ func main() {
 	router.HandleFunc("/usuarios/inserir", usuarioctl.UsuarioInserir(db)).Methods("POST")
 	router.HandleFunc("/usuarios/apagar/{id}", usuarioctl.UsuariosApagar(db)).Methods("DELETE")
 	router.HandleFunc("/usuarios/editar/{id}", usuarioctl.UsuarioEditar(db)).Methods("PUT")
+
+	// AUTOR URL ====================================
+	router.HandleFunc("/autores", autorctl.TodosAutores(db)).Methods("GET")
+	router.HandleFunc("/autores/{id}", autorctl.AutorUnico(db)).Methods("GET")
+	router.HandleFunc("/autores/inserir", autorctl.AutorInserir(db)).Methods("POST")
+	router.HandleFunc("/autores/apagar/{id}", autorctl.AutoresApagar(db)).Methods("DELETE")
+	router.HandleFunc("/autores/editar/{id}", autorctl.AutorEditar(db)).Methods("PUT")
 
 	// CORS ==========================================================
 	c := cors.New(cors.Options{
