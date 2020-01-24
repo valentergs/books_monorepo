@@ -17,17 +17,21 @@ var db *sql.DB
 
 func main() {
 	db := driver.ConnectDB()
+	usuarioctl := controllers.ControllerUsuario{}
 	livroctl := controllers.ControllerLivro{}
 
 	// gorilla.mux
 	router := mux.NewRouter()
 
 	// LIVRO URL ====================================
-	router.HandleFunc("/", livroctl.TodosLivros(db)).Methods("GET")
-	router.HandleFunc("/{id}", livroctl.LivroUnico(db)).Methods("GET")
-	router.HandleFunc("/inserir", livroctl.LivroInserir(db)).Methods("POST")
-	router.HandleFunc("/deletar/{id}", livroctl.LivroApagar(db)).Methods("DELETE")
-	router.HandleFunc("/editar/{id}", livroctl.LivroEditar(db)).Methods("PUT")
+	router.HandleFunc("/livros", livroctl.TodosLivros(db)).Methods("GET")
+	router.HandleFunc("/livros/{id}", livroctl.LivroUnico(db)).Methods("GET")
+	router.HandleFunc("/livros/inserir", livroctl.LivroInserir(db)).Methods("POST")
+	router.HandleFunc("/livros/deletar/{id}", livroctl.LivroApagar(db)).Methods("DELETE")
+	router.HandleFunc("/livros/editar/{id}", livroctl.LivroEditar(db)).Methods("PUT")
+
+	// USUARIO URL ====================================
+	router.HandleFunc("/usuarios", usuarioctl.TodosUsuarios(db)).Methods("GET")
 
 	// CORS ==========================================================
 	c := cors.New(cors.Options{

@@ -90,7 +90,7 @@ func (c ControllerLivro) LivroUnico(db *sql.DB) http.HandlerFunc {
 		
 		if err != nil {
 			if err == sql.ErrNoRows {
-				erro.Message = "Usuário inexistente"
+				erro.Message = "Livro inexistente"
 				utils.RespondWithError(w, http.StatusBadRequest, erro)
 				return
 			} else {
@@ -165,7 +165,7 @@ func (c ControllerLivro) LivroApagar(db *sql.DB) http.HandlerFunc {
 			error.Message = "Numero ID inválido"
 		}
 
-		db.QueryRow("DELETE FROM livros where usuario_id=$1;", id)
+		db.QueryRow("DELETE FROM livros where livro_id=$1;", id)
 
 		SuccessMessage := "Livro deletado com sucesso!"
 
