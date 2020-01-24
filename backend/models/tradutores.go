@@ -12,5 +12,5 @@ type Tradutores struct {
 	Criado      null.String `json:"criado"`
 	CriadoPor   int      `json:"criado_por"`
 	Alterado    null.String `json:"alterado"`
-	AlteradoPor int      `json:"alterado_por"`
-}
+	AlteradoPor null.Int      `json:"alterado_por"`
+}	

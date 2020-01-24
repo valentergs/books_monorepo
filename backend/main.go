@@ -20,6 +20,7 @@ func main() {
 	usuarioctl := controllers.ControllerUsuario{}
 	livroctl := controllers.ControllerLivro{}
 	autorctl := controllers.ControllerAutor{}
+	tradutorctl := controllers.ControllerTradutor{}
 
 	// gorilla.mux
 	router := mux.NewRouter()
@@ -44,6 +45,13 @@ func main() {
 	router.HandleFunc("/autores/inserir", autorctl.AutorInserir(db)).Methods("POST")
 	router.HandleFunc("/autores/apagar/{id}", autorctl.AutoresApagar(db)).Methods("DELETE")
 	router.HandleFunc("/autores/editar/{id}", autorctl.AutorEditar(db)).Methods("PUT")
+
+	// TRADUTOR URL ====================================
+	router.HandleFunc("/tradutores", tradutorctl.TodosTradutor(db)).Methods("GET")
+	router.HandleFunc("/tradutores/{id}", tradutorctl.TradutorUnico(db)).Methods("GET")
+	router.HandleFunc("/tradutores/inserir", tradutorctl.TradutorInserir(db)).Methods("POST")
+	router.HandleFunc("/tradutores/apagar/{id}", tradutorctl.TradutoresApagar(db)).Methods("DELETE")
+	router.HandleFunc("/tradutores/editar/{id}", tradutorctl.TradutorEditar(db)).Methods("PUT")
 
 	// CORS ==========================================================
 	c := cors.New(cors.Options{
