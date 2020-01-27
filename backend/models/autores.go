@@ -8,7 +8,6 @@ import (
 type Autores struct {
 	ID          int      `json:"autor_id"`
 	Nome        string   `json:"nome"`
-	Sobrenome   string   `json:"sobrenome"`
 	Criado      string `json:"criado"`
 	CriadoPor   int      `json:"criado_por"`
 	Alterado    null.String `json:"alterado"`

@@ -10,7 +10,7 @@ type Comentarios struct {
 	Criado      null.String `json:"criado"`
 	CriadoPor   string   `json:"criado_por"`
 	Alterado    null.String `json:"alterado"`
-	AlteradoPor int      `json:"alterado_por"`
+	AlteradoPor null.Int      `json:"alterado_por"`
 	Livro       int      `json:"livro"`
 	Text        string   `json:"texto"`
 }

@@ -132,7 +132,7 @@ func (c ControllerTradutor) TradutorInserir(db *sql.DB) http.HandlerFunc {
 			panic(err)
 		}
 
-		SuccessMessage := `Tradutor cadastrado com sucesso!`
+		SuccessMessage := fmt.Sprintf(`Tradutor %s %s foi cadastrado com sucesso!`, tradutores.Nome, tradutores.Sobrenome) 
 
 		w.Header().Set("Content-Type", "application/json")
 

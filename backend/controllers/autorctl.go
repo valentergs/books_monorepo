@@ -9,10 +9,14 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/lib/pq"
+
 	"github.com/gorilla/mux"
 	"github.com/valentergs/books_monorepo/models"
 	"github.com/valentergs/books_monorepo/utils"
 )
+
+
 
 //ControllerAutor será exportado
 type ControllerAutor struct{}
@@ -47,7 +51,7 @@ func (c ControllerAutor) TodosAutores(db *sql.DB) http.HandlerFunc {
 		clts := make([]models.Autores, 0)
 		for rows.Next() {
 			clt := models.Autores{}
-			err := rows.Scan(&clt.ID, &clt.Nome, &clt.Sobrenome, &clt.Criado, &clt.CriadoPor, &clt.Alterado, &clt.AlteradoPor)
+			err := rows.Scan(&clt.ID, &clt.Nome, &clt.Criado, &clt.CriadoPor, &clt.Alterado, &clt.AlteradoPor)
 			if err != nil {
 				http.Error(w, http.StatusText(500), 500)
 				fmt.Println(err)
@@ -91,7 +95,7 @@ func (c ControllerAutor) AutorUnico(db *sql.DB) http.HandlerFunc {
 
 		row := db.QueryRow("SELECT * FROM autores WHERE autor_id=$1;", id)
 
-		err = row.Scan(&autores.ID, &autores.Nome, &autores.Sobrenome, &autores.Criado, &autores.CriadoPor, &autores.Alterado, &autores.AlteradoPor)
+		err = row.Scan(&autores.ID, &autores.Nome, &autores.Criado, &autores.CriadoPor, &autores.Alterado, &autores.AlteradoPor)
 		
 		if err != nil {
 			if err == sql.ErrNoRows {
@@ -127,16 +131,22 @@ func (c ControllerAutor) AutorInserir(db *sql.DB) http.HandlerFunc {
 
 		json.NewDecoder(r.Body).Decode(&autores)
 
-		expressaoSQL := `INSERT INTO autores (nome, sobrenome, criado, criado_por) VALUES ($1,$2,$3,$4);`
-		_, err := db.Exec(expressaoSQL, autores.Nome, autores.Sobrenome, autores.Criado, autores.CriadoPor)
-		if err != nil {
-			panic(err)
+		expressaoSQL := `INSERT INTO autores (nome, criado, criado_por) VALUES ($1,$2,$3);`
+		_, err := db.Exec(expressaoSQL, autores.Nome, autores.Criado, autores.CriadoPor)
+		if pgerr, ok := err.(*pq.Error); ok {
+			if pgerr.Code == "23505" {
+				erro.Message = "Erro! Autor(a) em duplicidade"
+				utils.RespondWithError(w, http.StatusBadRequest, erro)
+				return
+			} else {
+				erro.Message = "Desculpe. Aconteceu algo de errado com nosso Banco de Dados."
+				utils.RespondWithError(w, http.StatusBadRequest, erro)
+				return
+			}
 		}
 
-		SuccessMessage := `Autor cadastrado com sucesso!`
-
+		SuccessMessage := fmt.Sprintf(`Autor %s foi cadastrado com sucesso!`, autores.Nome) 
 		w.Header().Set("Content-Type", "application/json")
-
 		utils.ResponseJSON(w, SuccessMessage)
 
 	}
@@ -147,7 +157,7 @@ func (c ControllerAutor) AutoresApagar(db *sql.DB) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		var error models.Error
+		var erro models.Error
 
 		if r.Method != "DELETE" {
 			http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
@@ -157,12 +167,14 @@ func (c ControllerAutor) AutoresApagar(db *sql.DB) http.HandlerFunc {
 		params := mux.Vars(r)
 		id, err := strconv.Atoi(params["id"])
 		if err != nil {
-			error.Message = "Numero ID inválido"
+			erro.Message = "Numero ID inválido"
+			utils.RespondWithError(w, http.StatusBadRequest, erro)
+			return
 		}
 
 		db.QueryRow("DELETE FROM autores where autor_id=$1;", id)
 
-		SuccessMessage := "Autor deletado com sucesso!"
+		SuccessMessage := "Autor apagado com sucesso!"
 
 		w.Header().Set("Content-Type", "application/json")
 
@@ -192,13 +204,13 @@ func (c ControllerAutor) AutorEditar(db *sql.DB) http.HandlerFunc {
 
 		json.NewDecoder(r.Body).Decode(&autores)
 
-		expressaoSQL := `UPDATE autores SET nome=$1, sobrenome=$2, alterado=$3, alterado_por=$4 WHERE autor_id=$5;`
-		_, err = db.Exec(expressaoSQL, autores.Nome, autores.Sobrenome, autores.Alterado, autores.AlteradoPor, id)
+		expressaoSQL := `UPDATE autores SET nome=$1, alterado=$2, alterado_por=$3 WHERE autor_id=$4;`
+		_, err = db.Exec(expressaoSQL, autores.Nome, autores.Alterado, autores.AlteradoPor, id)
 		if err != nil {
 			panic(err)
 		}
 
-		SuccessMessage := "Autor alterado com sucesso!"
+		SuccessMessage := fmt.Sprintf(`Autor %s foi cadastrado com sucesso!`, autores.Nome) 
 
 		w.Header().Set("Content-Type", "application/json")
 

@@ -133,15 +133,17 @@ func (c ControllerLivro) LivroInserir(db *sql.DB) http.HandlerFunc {
 			panic(err)
 		}
 
-		row := db.QueryRow("SELECT * FROM livros WHERE isbn=$1;", livro.Isbn)
-		err = row.Scan(&livro.ID, &livro.Isbn, &livro.Criado, &livro.CriadoPor, &livro.Alterado, &livro.AlteradoPor, &livro.Titulo, &livro.TituloOriginal, &livro.Autor, &livro.Tradutor, &livro.Cdd, &livro.Cdu, &livro.Ano, &livro.Tema, &livro.Editora, &livro.Paginas, &livro.Idioma, &livro.Formato, &livro.Photourl)
-		if err != nil {
-			panic(err)
-		}
+		// row := db.QueryRow("SELECT * FROM livros WHERE isbn=$1;", livro.Isbn)
+		// err = row.Scan(&livro.ID, &livro.Isbn, &livro.Criado, &livro.CriadoPor, &livro.Alterado, &livro.AlteradoPor, &livro.Titulo, &livro.TituloOriginal, &livro.Autor, &livro.Tradutor, &livro.Cdd, &livro.Cdu, &livro.Ano, &livro.Tema, &livro.Editora, &livro.Paginas, &livro.Idioma, &livro.Formato, &livro.Photourl)
+		// if err != nil {
+		// 	panic(err)
+		// }
+
+		SuccessMessage := fmt.Sprintf(`Livro %s foi cadastrado com sucesso!`, livro.Titulo) 
 
 		w.Header().Set("Content-Type", "application/json")
 
-		utils.ResponseJSON(w, livro)
+		utils.ResponseJSON(w, SuccessMessage)
 
 	}
 }

@@ -132,7 +132,7 @@ func (c ControllerUsuario) UsuarioInserir(db *sql.DB) http.HandlerFunc {
 			panic(err)
 		}
 
-		SuccessMessage := `Usuário cadastrado com sucesso!`
+		SuccessMessage := fmt.Sprintf(`Usuario %s %s foi cadastrado com sucesso!`, usuarios.Nome, usuarios.Sobrenome) 
 
 		w.Header().Set("Content-Type", "application/json")
 
