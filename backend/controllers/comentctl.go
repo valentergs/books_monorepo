@@ -3,14 +3,13 @@ package controllers
 import (
 	"database/sql"
 	"encoding/json"
-	// "encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 
-	// "strconv"
+	"strconv"
 
-	// "github.com/gorilla/mux"
+	"github.com/gorilla/mux"
 	"github.com/valentergs/books_monorepo/models"
 	"github.com/valentergs/books_monorepo/utils"
 )
@@ -163,7 +162,7 @@ func (c Controllercomentarios) ComentariosApagar(db *sql.DB) http.HandlerFunc {
 
 		db.QueryRow("DELETE FROM comentarios where comentarios_id=$1;", id)
 
-		SuccessMessage := "Usuário deletado com sucesso!"
+		SuccessMessage := "Comentário apagado com sucesso!"
 
 		w.Header().Set("Content-Type", "application/json")
 
@@ -172,38 +171,38 @@ func (c Controllercomentarios) ComentariosApagar(db *sql.DB) http.HandlerFunc {
 	}
 }
 
-// //comentariosEditar será exportado =========================================
-// func (c Controllercomentarios) ComentariosEditar(db *sql.DB) http.HandlerFunc {
+//ComentariosEditar será exportado =========================================
+func (c Controllercomentarios) ComentariosEditar(db *sql.DB) http.HandlerFunc {
 
-// 	return func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 
-// 		var comentarios models.comentarios
-// 		var error models.Error
+		var comentarios models.Comentarios
+		var error models.Error
 
-// 		if r.Method != "PUT" {
-// 			http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
-// 			return
-// 		}
+		if r.Method != "PUT" {
+			http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+			return
+		}
 
-// 		params := mux.Vars(r)
-// 		id, err := strconv.Atoi(params["id"])
-// 		if err != nil {
-// 			error.Message = "Numero ID inválido"
-// 		}
+		params := mux.Vars(r)
+		id, err := strconv.Atoi(params["id"])
+		if err != nil {
+			error.Message = "Numero ID inválido"
+		}
 
-// 		json.NewDecoder(r.Body).Decode(&comentarios)
+		json.NewDecoder(r.Body).Decode(&comentarios)
 
-// 		expressaoSQL := `UPDATE comentarios SET alterado=$1, nome=$2, sobrenome=$3, email=$4, senha=$5 WHERE comentarios_id=$6;`
-// 		_, err = db.Exec(expressaoSQL, comentarios.Alterado, comentarios.Nome, comentarios.Sobrenome, comentarios.Email, comentarios.Senha, id)
-// 		if err != nil {
-// 			panic(err)
-// 		}
+		expressaoSQL := `UPDATE comentarios SET alterado=$1, livro=$2, texto=$3 WHERE comentario_id=$4;`
+		_, err = db.Exec(expressaoSQL, comentarios.Alterado, comentarios.Livro, comentarios.Text, id)
+		if err != nil {
+			panic(err)
+		}
 
-// 		SuccessMessage := "Usuário alterado com sucesso!"
+		SuccessMessage := "Comentário alterado com sucesso!"
 
-// 		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json")
 
-// 		utils.ResponseJSON(w, SuccessMessage)
+		utils.ResponseJSON(w, SuccessMessage)
 
-// 	}
-// }
+	}
+}

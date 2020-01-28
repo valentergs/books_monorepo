@@ -57,7 +57,8 @@ func main() {
 	// COMENTARIO URL ====================================
 	router.HandleFunc("/comentarios", comentctl.Todoscomentarios(db)).Methods("GET")
 	router.HandleFunc("/comentarios/inserir", comentctl.ComentariosInserir(db)).Methods("POST")
-	router.HandleFunc("/comentarios/apagar", comentctl.ComentariosApagar(db)).Methods("DELETE")
+	router.HandleFunc("/comentarios/apagar/{id}", comentctl.ComentariosApagar(db)).Methods("DELETE")
+	router.HandleFunc("/comentarios/editar/{id}", comentctl.ComentariosEditar(db)).Methods("PUT")
 
 	// CORS ==========================================================
 	c := cors.New(cors.Options{
