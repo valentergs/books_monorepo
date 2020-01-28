@@ -1,71 +1,73 @@
 package controllers
 
-// import (
-// 	"database/sql"
-// 	"encoding/json"
-// 	"fmt"
-// 	"log"
-// 	"net/http"
-// 	"strconv"
+import (
+	"database/sql"
+	"encoding/json"
+	// "encoding/json"
+	"fmt"
+	"log"
+	"net/http"
 
-// 	"github.com/gorilla/mux"
-// 	"github.com/valentergs/books_monorepo/models"
-// 	"github.com/valentergs/books_monorepo/utils"
-// )
+	// "strconv"
 
-// //Controllercomentarios será exportado
-// type Controllercomentarios struct{}
+	// "github.com/gorilla/mux"
+	"github.com/valentergs/books_monorepo/models"
+	"github.com/valentergs/books_monorepo/utils"
+)
 
-// //Todoscomentarios será exportado ==========================================
-// func (c Controllercomentarios) Todoscomentarios(db *sql.DB) http.HandlerFunc {
+//Controllercomentarios será exportado
+type Controllercomentarios struct{}
 
-// 	return func(w http.ResponseWriter, r *http.Request) {
+//Todoscomentarios será exportado ==========================================
+func (c Controllercomentarios) Todoscomentarios(db *sql.DB) http.HandlerFunc {
 
-// 		var erro models.Error
+	return func(w http.ResponseWriter, r *http.Request) {
 
-// 		if r.Method != "GET" {
-// 			erro.Message = "Método não permitido"
-// 				utils.RespondWithError(w, http.StatusMethodNotAllowed, erro)
-// 				return
-// 		}
+		var erro models.Error
 
-// 		rows, err := db.Query("SELECT * FROM comentarios ORDER BY comentarios_id DESC;")
+		if r.Method != "GET" {
+			erro.Message = "Método não permitido"
+			utils.RespondWithError(w, http.StatusMethodNotAllowed, erro)
+			return
+		}
 
-// 		if err != nil {
-// 			if err == sql.ErrNoRows {
-// 				erro.Message = "Não encontramos nenhum comentario"
-// 				utils.RespondWithError(w, http.StatusBadRequest, erro)
-// 				return
-// 			} else {
-// 				log.Fatal(err)
-// 			}
-// 		}
+		rows, err := db.Query("SELECT * FROM comentarios ORDER BY comentario_id DESC;")
 
-// 		defer rows.Close()
+		if err != nil {
+			if err == sql.ErrNoRows {
+				erro.Message = "Não encontramos nenhum comentario"
+				utils.RespondWithError(w, http.StatusBadRequest, erro)
+				return
+			} else {
+				log.Fatal(err)
+			}
+		}
 
-// 		clts := make([]models.comentarios, 0)
-// 		for rows.Next() {
-// 			clt := models.comentarios{}
-// 			err := rows.Scan(&clt.ID, &clt.Criado, &clt.CriadoPor, &clt.Alterado, &clt.AlteradoPor, &clt.Livros, &clt.Texto)
-// 			if err != nil {
-// 				http.Error(w, http.StatusText(500), 500)
-// 				fmt.Println(err)
-// 				return
-// 			}
-// 			clts = append(clts, clt)
+		defer rows.Close()
 
-// 		}
-// 		if err != nil {
-// 			log.Fatal(err)
-// 		}
+		clts := make([]models.Comentarios, 0)
+		for rows.Next() {
+			clt := models.Comentarios{}
+			err := rows.Scan(&clt.ID, &clt.Criado, &clt.CriadoPor, &clt.Alterado, &clt.Livro, &clt.Text)
+			if err != nil {
+				http.Error(w, http.StatusText(500), 500)
+				fmt.Println(err)
+				return
+			}
+			clts = append(clts, clt)
 
-// 		w.Header().Set("Content-Type", "application/json")
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
 
-// 		utils.ResponseJSON(w, clts)
+		w.Header().Set("Content-Type", "application/json")
 
-// 	}
+		utils.ResponseJSON(w, clts)
 
-// }
+	}
+
+}
 
 // //comentariosUnico será exportado ==========================================
 // func (c Controllercomentarios) ComentariosUnico(db *sql.DB) http.HandlerFunc {
@@ -110,65 +112,65 @@ package controllers
 
 // }
 
-// //comentariosInserir será exportado ===========================================
-// func (c Controllercomentarios) ComentariosInserir(db *sql.DB) http.HandlerFunc {
+//ComentariosInserir será exportado ===========================================
+func (c Controllercomentarios) ComentariosInserir(db *sql.DB) http.HandlerFunc {
 
-// 	return func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 
-// 		var erro models.Error
-// 		var comentarios models.comentarios
+		var erro models.Error
+		var comentarios models.Comentarios
 
-// 		if r.Method != "POST" {
-// 			erro.Message = "Método não permitido"
-// 			utils.RespondWithError(w, http.StatusMethodNotAllowed, erro)
-// 			return
-// 		}
+		if r.Method != "POST" {
+			erro.Message = "Método não permitido"
+			utils.RespondWithError(w, http.StatusMethodNotAllowed, erro)
+			return
+		}
 
-// 		json.NewDecoder(r.Body).Decode(&comentarios)
+		json.NewDecoder(r.Body).Decode(&comentarios)
 
-// 		expressaoSQL := `INSERT INTO comentarios (criado, nome, sobrenome, email, senha) VALUES ($1,$2,$3,$4,$5);`
-// 		_, err := db.Exec(expressaoSQL, comentarios.Criado, comentarios.Nome, comentarios.Sobrenome, comentarios.Email, comentarios.Senha)
-// 		if err != nil {
-// 			panic(err)
-// 		}
+		expressaoSQL := `INSERT INTO comentarios (criado_por, livro, texto) VALUES ($1,$2,$3);`
+		_, err := db.Exec(expressaoSQL, comentarios.CriadoPor, comentarios.Livro, comentarios.Text)
+		if err != nil {
+			panic(err)
+		}
 
-// 		SuccessMessage := `Usuário cadastrado com sucesso!`
+		SuccessMessage := `Comentário cadastrado com sucesso!`
 
-// 		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json")
 
-// 		utils.ResponseJSON(w, SuccessMessage)
+		utils.ResponseJSON(w, SuccessMessage)
 
-// 	}
-// }
+	}
+}
 
-// //comentariosApagar será exportado =========================================
-// func (c Controllercomentarios) ComentariosApagar(db *sql.DB) http.HandlerFunc {
+//ComentariosApagar será exportado =========================================
+func (c Controllercomentarios) ComentariosApagar(db *sql.DB) http.HandlerFunc {
 
-// 	return func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 
-// 		var error models.Error
+		var error models.Error
 
-// 		if r.Method != "DELETE" {
-// 			http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
-// 			return
-// 		}
+		if r.Method != "DELETE" {
+			http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+			return
+		}
 
-// 		params := mux.Vars(r)
-// 		id, err := strconv.Atoi(params["id"])
-// 		if err != nil {
-// 			error.Message = "Numero ID inválido"
-// 		}
+		params := mux.Vars(r)
+		id, err := strconv.Atoi(params["id"])
+		if err != nil {
+			error.Message = "Numero ID inválido"
+		}
 
-// 		db.QueryRow("DELETE FROM comentarios where comentarios_id=$1;", id)
+		db.QueryRow("DELETE FROM comentarios where comentarios_id=$1;", id)
 
-// 		SuccessMessage := "Usuário deletado com sucesso!"
+		SuccessMessage := "Usuário deletado com sucesso!"
 
-// 		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json")
 
-// 		utils.ResponseJSON(w, SuccessMessage)
+		utils.ResponseJSON(w, SuccessMessage)
 
-// 	}
-// }
+	}
+}
 
 // //comentariosEditar será exportado =========================================
 // func (c Controllercomentarios) ComentariosEditar(db *sql.DB) http.HandlerFunc {

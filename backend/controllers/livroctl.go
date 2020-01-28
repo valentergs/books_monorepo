@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/lib/pq"
+
 	"github.com/gorilla/mux"
 	"github.com/valentergs/books_monorepo/models"
 	"github.com/valentergs/books_monorepo/utils"
@@ -129,9 +131,25 @@ func (c ControllerLivro) LivroInserir(db *sql.DB) http.HandlerFunc {
 
 		expressaoSQL := `INSERT INTO livros (isbn, criado_por, titulo, titulo_original, autor, tradutor, cdd, cdu, ano, tema, editora, paginas, idioma, formato, photourl) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15);`
 		_, err := db.Exec(expressaoSQL, livro.Isbn, livro.CriadoPor, livro.Titulo, livro.TituloOriginal, livro.Autor, livro.Tradutor, livro.Cdd, livro.Cdu, livro.Ano, livro.Tema, livro.Editora, livro.Paginas, livro.Idioma, livro.Formato, livro.Photourl)
-		if err != nil {
-			panic(err)
+
+		// if err != nil {
+		// 	panic(err)
+		// }
+
+		if pgerr, err := err.(*pq.Error); err {
+			if pgerr.Code == "23505" {
+				erro.Message = "Erro! Livro em duplicidade"
+				utils.RespondWithError(w, http.StatusBadRequest, erro)
+				return
+			} else {
+				erro.Message = "Desculpe. Aconteceu algo de errado com nosso Banco de Dados."
+				utils.RespondWithError(w, http.StatusBadRequest, erro)
+				return
+				panic(err)
+			}
 		}
+
+		
 
 		// row := db.QueryRow("SELECT * FROM livros WHERE isbn=$1;", livro.Isbn)
 		// err = row.Scan(&livro.ID, &livro.Isbn, &livro.Criado, &livro.CriadoPor, &livro.Alterado, &livro.AlteradoPor, &livro.Titulo, &livro.TituloOriginal, &livro.Autor, &livro.Tradutor, &livro.Cdd, &livro.Cdu, &livro.Ano, &livro.Tema, &livro.Editora, &livro.Paginas, &livro.Idioma, &livro.Formato, &livro.Photourl)

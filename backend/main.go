@@ -21,6 +21,7 @@ func main() {
 	livroctl := controllers.ControllerLivro{}
 	autorctl := controllers.ControllerAutor{}
 	tradutorctl := controllers.ControllerTradutor{}
+	comentctl := controllers.Controllercomentarios{}
 
 	// gorilla.mux
 	router := mux.NewRouter()
@@ -29,7 +30,7 @@ func main() {
 	router.HandleFunc("/livros", livroctl.TodosLivros(db)).Methods("GET")
 	router.HandleFunc("/livros/{id}", livroctl.LivroUnico(db)).Methods("GET")
 	router.HandleFunc("/livros/inserir", livroctl.LivroInserir(db)).Methods("POST")
-	router.HandleFunc("/livros/deletar/{id}", livroctl.LivroApagar(db)).Methods("DELETE")
+	router.HandleFunc("/livros/apagar/{id}", livroctl.LivroApagar(db)).Methods("DELETE")
 	router.HandleFunc("/livros/editar/{id}", livroctl.LivroEditar(db)).Methods("PUT")
 
 	// USUARIO URL ====================================
@@ -52,6 +53,11 @@ func main() {
 	router.HandleFunc("/tradutores/inserir", tradutorctl.TradutorInserir(db)).Methods("POST")
 	router.HandleFunc("/tradutores/apagar/{id}", tradutorctl.TradutoresApagar(db)).Methods("DELETE")
 	router.HandleFunc("/tradutores/editar/{id}", tradutorctl.TradutorEditar(db)).Methods("PUT")
+
+	// COMENTARIO URL ====================================
+	router.HandleFunc("/comentarios", comentctl.Todoscomentarios(db)).Methods("GET")
+	router.HandleFunc("/comentarios/inserir", comentctl.ComentariosInserir(db)).Methods("POST")
+	router.HandleFunc("/comentarios/apagar", comentctl.ComentariosApagar(db)).Methods("DELETE")
 
 	// CORS ==========================================================
 	c := cors.New(cors.Options{

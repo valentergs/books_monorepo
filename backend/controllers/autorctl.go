@@ -133,17 +133,23 @@ func (c ControllerAutor) AutorInserir(db *sql.DB) http.HandlerFunc {
 
 		expressaoSQL := `INSERT INTO autores (nome, criado, criado_por) VALUES ($1,$2,$3);`
 		_, err := db.Exec(expressaoSQL, autores.Nome, autores.Criado, autores.CriadoPor)
-		if pgerr, ok := err.(*pq.Error); ok {
-			if pgerr.Code == "23505" {
-				erro.Message = "Erro! Autor(a) em duplicidade"
-				utils.RespondWithError(w, http.StatusBadRequest, erro)
-				return
-			} else {
-				erro.Message = "Desculpe. Aconteceu algo de errado com nosso Banco de Dados."
-				utils.RespondWithError(w, http.StatusBadRequest, erro)
-				return
+
+		if err != nil {
+			if pgerr, ok := err.(*pq.Error); ok {
+				if pgerr.Code == "23505" {
+					erro.Message = "Erro! Autor(a) em duplicidade"
+					utils.RespondWithError(w, http.StatusBadRequest, erro)
+					return
+				} else {
+					erro.Message = "Desculpe. Aconteceu algo de errado com nosso Banco de Dados."
+					utils.RespondWithError(w, http.StatusBadRequest, erro)
+					return
+				}
 			}
+		} else {
+			panic(err)
 		}
+		
 
 		SuccessMessage := fmt.Sprintf(`Autor %s foi cadastrado com sucesso!`, autores.Nome) 
 		w.Header().Set("Content-Type", "application/json")
@@ -172,7 +178,13 @@ func (c ControllerAutor) AutoresApagar(db *sql.DB) http.HandlerFunc {
 			return
 		}
 
-		db.QueryRow("DELETE FROM autores where autor_id=$1;", id)
+		query := db.QueryRow("SELECT * FROM autores WHERE autor_id=$1", id)
+
+		if query == nil {
+			fmt.Println("Não encontramos o usuário informado")
+		} else {
+			db.QueryRow("DELETE FROM autores where autor_id=$1;", id)
+		}
 
 		SuccessMessage := "Autor apagado com sucesso!"
 
